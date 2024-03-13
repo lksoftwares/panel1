@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\panel1.props" />
+</Project>
