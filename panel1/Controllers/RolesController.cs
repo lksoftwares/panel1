@@ -58,10 +58,16 @@ namespace Panel1.Controllers
                     return BadRequest("RoleName already exists.");
                 }
 
-                string insertRoleQuery = $"INSERT INTO Roles_R (RoleName) " +
-                                        $"VALUES ('{role.RoleName}')";
+                //string insertRoleQuery = $"INSERT INTO Roles_R (RoleName) " +
+                //                        $"VALUES ('{role.RoleName}')";
+              //  _connection.ExecuteQueryWithoutResult(insertRoleQuery);
 
-                _connection.ExecuteQueryWithoutResult(insertRoleQuery);
+                DataTable dataTable = new DataTable();
+                dataTable.Columns.Add("RoleName");
+                dataTable.Rows.Add(role.RoleName);
+
+                _connection.InsertDataTable("Roles_R", dataTable);
+
 
                 return Ok("RoleName Added Successfully");
             }
@@ -80,6 +86,17 @@ namespace Panel1.Controllers
             string updateRoleQuery = $"Update Roles_R set RoleName='{role.RoleName}' where RoleID='{id}'";
             try
             {
+                var duplicacyChecker = new CheckDuplicacy(_connection);
+
+                bool isDuplicate = duplicacyChecker.CheckDuplicate("Designation_mst",
+                 new[] { "RoleName" },
+                 new[] { role.RoleName },
+                 "RoleID");
+
+                if (isDuplicate)
+                {
+                    return BadRequest("Duplicate Rolename exists.");
+                }
                 _connection.ExecuteQueryWithoutResult(updateRoleQuery);
                 return Ok("RoleName Updated Successfully");
             }
@@ -88,6 +105,7 @@ namespace Panel1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error{ex.Message}");
             }
         }
+        
         [AllowAnonymous]
         [HttpDelete]
         [Route("deleteRole/{id}")]

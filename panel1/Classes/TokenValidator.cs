@@ -15,7 +15,6 @@ public class TokenValidator
     {
         if (string.IsNullOrEmpty(token))
         {
-            // Token is null or empty, cannot proceed with validation
             jwt = null;
             return false;
         }

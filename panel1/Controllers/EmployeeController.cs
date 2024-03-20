@@ -64,7 +64,6 @@ namespace Panel1.Controllers
 
                     });
                 }
-               
                 return Ok(EmployeeList);
 
             
@@ -88,11 +87,13 @@ namespace Panel1.Controllers
                 $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.image}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
             try
             {
+               
                 _connection.ExecuteQueryWithoutResult(insertquery);
                 return Ok("Employee Added Successfully");
             }
             catch (Exception ex)
             {
+                
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
             }
         }
@@ -172,7 +173,6 @@ namespace Panel1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
             }
         }
-
 
         [HttpDelete]
         [Route("deleteEmployee/{id}")]

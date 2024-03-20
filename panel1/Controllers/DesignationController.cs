@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using panel1.Classes;
 using Panel1.Classes;
 using Panel1.Model;
 using System.Data;
@@ -14,9 +15,12 @@ namespace Panel1.Controllers
     public class DesignationController : ControllerBase
     {
         private readonly Connection _connection;
-        public DesignationController(Connection connection)
+        private readonly InsertMethod _insertMethod;
+
+        public DesignationController(Connection connection, InsertMethod insertMethod)
         {
             _connection = connection;
+            _insertMethod = insertMethod;
         }
         [HttpGet]
         [Route("getDesignation")]
@@ -39,15 +43,23 @@ namespace Panel1.Controllers
             return Ok(DesignationList);
 
         }
+
+
         [HttpPost]
         [Route("addDesignation")] 
         public async Task<IActionResult> AddDesignation([FromBody] DesignationModel designation)
         {
-            string insertquery = $"insert into Designation_mst(Designation, status) Values('{designation.Designation}', '{designation.status}')";
+            //string insertquery = $"insert into Designation_mst(Designation, status) Values('{designation.Designation}', '{designation.status}')";
 
             try
             {
-                await _connection.ExecuteQueryWithoutResultAsync(insertquery);
+                // await _connection.ExecuteQueryWithoutResultAsync(insertquery);
+
+                //var insertMethod = new InsertMethod(_connection);
+                //insertMethod.Insert("Designation_mst", new[] { "Designation",  "status" },
+                //                    new[] { designation.Designation,  designation.status });
+             //   _insertMethod.InsertEntityIntoTable(designation, "Designation_mst");
+
                 return Ok("Designation Added Successfully");
             }
             catch (Exception ex)
@@ -75,10 +87,27 @@ namespace Panel1.Controllers
         [Route("updateDesignation/{id}")]
         public IActionResult UpdateDesignation(int id, [FromBody] DesignationModel designation)
         {
-            string updatequery = $"update Designation_mst set Designation='{designation.Designation}',status='{designation.status}' where Designation_id={id}";
             try
             {
-                _connection.ExecuteQueryWithoutResult(updatequery);
+                var duplicacyChecker = new CheckDuplicacy(_connection);
+
+                bool isDuplicate = duplicacyChecker.CheckDuplicate("Designation_mst",
+                 new[] { "Designation" },
+                 new[] { designation.Designation },
+                 "Designation_id");
+
+                if (isDuplicate)
+                {
+                    return BadRequest("Duplicate Designation exists.");
+                }
+                var updateMethod = new UpdateMethod(_connection);
+                updateMethod.Update("Designation_mst",
+                                    new[] { "Designation", "status" },
+                                    new[] { designation.Designation, designation.status },
+                                    "Designation_id", id);
+                //string updatequery = $"update Designation_mst set Designation='{designation.Designation}',status='{designation.status}' where Designation_id={id}";
+
+                //_connection.ExecuteQueryWithoutResult(updatequery);
                 return Ok("Updated Successfully");
 
             }
@@ -90,36 +119,3 @@ namespace Panel1.Controllers
 
     }
 }
-
-//using Microsoft.AspNetCore.Mvc;
-//using Panel1.Classes;
-//using System;
-//using System.Data;
-//using Newtonsoft.Json;
-
-//[Route("api/[controller]")]
-//[ApiController]
-//public class DesignationController : ControllerBase
-//{
-//    private readonly Connection _connection;
-//    private readonly object JsonConvert;
-
-//    public DesignationController(Connection connection)
-//    {
-//        _connection = connection;
-//    }
-
-//    [HttpGet]
-//    [Route("getDesignation")]
-//    public IActionResult GetDesignation()
-//    {
-//        string getDesignationQuery = "select * from Designation_mst";
-//        DataTable designationTable = _connection.ExecuteQueryWithResult(getDesignationQuery);
-
-//        string jsonResult = JsonConvert.SerializeObject(designationTable);
-
-//        return Content(jsonResult, "application/json");
-//    }
-//}
-
-

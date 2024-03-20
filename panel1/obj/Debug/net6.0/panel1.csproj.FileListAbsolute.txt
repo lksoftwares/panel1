@@ -70,3 +70,4 @@ F:\vs2022\panel1\panel1\obj\Debug\net6.0\panel1.genruntimeconfig.cache
 F:\vs2022\panel1\panel1\obj\Debug\net6.0\ref\panel1.dll
 F:\vs2022\panel1\panel1\bin\Debug\net6.0\FluentAssertions.dll
 F:\vs2022\panel1\panel1\bin\Debug\net6.0\Newtonsoft.Json.dll
+F:\vs2022\panel1\panel1\obj\Debug\net6.0\panel1.sourcelink.json

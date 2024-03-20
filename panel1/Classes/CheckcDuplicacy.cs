@@ -1,6 +1,5 @@
 ﻿using Panel1.Classes;
 using System.Data;
-
 public class CheckDuplicacy
 {
     private readonly Connection _connection;
