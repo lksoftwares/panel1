@@ -139,7 +139,7 @@
     "Parameters": [
       {
         "Name": "Emp_id",
-        "Type": "System.Int32",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -148,7 +148,7 @@
         "IsRequired": false
       },
       {
-        "Name": "Emp_Code",
+        "Name": "empcode",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -275,6 +275,11 @@
       {
         "Name": "ImageUrl",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "tf",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -309,19 +314,19 @@
   {
     "ContainingType": "Panel1.Controllers.EmployeeController",
     "Method": "UpdateEmployee",
-    "RelativePath": "api/Employee/updateEmployee/{id}",
+    "RelativePath": "api/Employee/updateEmployee/{Emp_id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "Emp_id",
         "Type": "System.Int32",
         "IsRequired": true
       },
       {
         "Name": "Emp_id",
-        "Type": "System.Int32",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -330,7 +335,7 @@
         "IsRequired": false
       },
       {
-        "Name": "Emp_Code",
+        "Name": "empcode",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -457,6 +462,11 @@
       {
         "Name": "ImageUrl",
         "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "tf",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],

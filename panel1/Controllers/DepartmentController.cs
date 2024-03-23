@@ -237,10 +237,7 @@ namespace Panel1.Controllers
                 //{
                 //    return BadRequest("Department ID mismatch.");
                 //}
-                if (department == null)
-                {
-                    return BadRequest("Invalid department data.");
-                }
+               
                 // Call InsertOrUpdateEntity method of InsertMethod to perform the update
                 _insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
 
