@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 
@@ -18,8 +17,60 @@ namespace panel1.Classes
                 image.CopyTo(stream);
             }
 
-            return $"/images/{fileName}";
+            return $"{fileName}";
+        }
+
+        public static void DeleteImage(string imagePath)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(imagePath))
+                {
+                    Console.WriteLine("Image path is empty or null.");
+                    return;
+                }
+
+                // Construct the full path by combining the base directory and the image path
+                string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "public", "images", imagePath);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                    Console.WriteLine($"Image deleted: {fullPath}");
+                }
+                else
+                {
+                    Console.WriteLine($"File does not exist: {fullPath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting image: {ex.Message}");
+            }
         }
     }
+    //public static void DeleteImage(string imagePath)
+    //{
+    //    if (!string.IsNullOrEmpty(imagePath))
+    //    {
+
+    //        return;
+    //    }
+    //    if (File.Exists(imagePath))
+    //    {
+    //        try
+    //        {
+    //            File.Delete(imagePath);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Console.WriteLine($"Error deleting image: {ex.Message}");
+    //        }
+    //    }
+    //}
+
+
+
 }
+
 

@@ -133,15 +133,15 @@ namespace Panel1.Classes
 {
     public class Connection
     {
+
         private readonly string _ConnectionString;
         private readonly SqlConnection _connection;
 
-        public string ConnectionString { get; internal set; }
-
+      
         public Connection(IConfiguration configuration)
         {
             _ConnectionString = configuration.GetConnectionString("dbcs");
-            _connection = new SqlConnection(_ConnectionString); 
+            _connection = new SqlConnection(_ConnectionString);
         }
 
         public SqlConnection GetSqlConnection()
@@ -206,7 +206,9 @@ namespace Panel1.Classes
                 }
 
                 com.ExecuteNonQuery();
+                _connection.Close();
             }
+          
         }
     
         public void InsertDataTable(string tableName, DataTable dataTable)
@@ -269,7 +271,45 @@ namespace Panel1.Classes
                 throw new Exception($"Error inserting row into table {tableName}: {ex.Message}");
             }
         }
+        public string GetOldImagePathFromDatabase(int Emp_id)
+        {
+            string oldImagePath = null;
+
+            try
+            {
+                string query = "SELECT image FROM Emp_Details WHERE Emp_id = @Emp_id";
+                //Console.WriteLine($"_connection{_ConnectionString}");
+                //using (SqlConnection connection = GetSqlConnection())
+                //{
+
+                    using (SqlCommand command = new SqlCommand(query, _connection))
+                    {
+                    _connection.Open();
+
+                    command.Parameters.AddWithValue("@Emp_id", Emp_id);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                oldImagePath = reader["image"].ToString();
+                                Console.WriteLine(oldImagePath);
+                            }
+                        }
+                    _connection.Close();
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving old image path from database: {ex.Message}");
+                
+            }
+
+            return oldImagePath;
+        }
     }
+
 }
 
 
