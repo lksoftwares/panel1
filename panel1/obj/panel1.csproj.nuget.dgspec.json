@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\vs2022\\panel1\\panel1\\panel1.csproj": {}
+    "D:\\panel2\\panel1\\panel1\\panel1.csproj": {}
   },
   "projects": {
-    "F:\\vs2022\\panel1\\panel1\\panel1.csproj": {
+    "D:\\panel2\\panel1\\panel1\\panel1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\vs2022\\panel1\\panel1\\panel1.csproj",
+        "projectUniqueName": "D:\\panel2\\panel1\\panel1\\panel1.csproj",
         "projectName": "panel1",
-        "projectPath": "F:\\vs2022\\panel1\\panel1\\panel1.csproj",
+        "projectPath": "D:\\panel2\\panel1\\panel1\\panel1.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "F:\\vs2022\\panel1\\panel1\\obj\\",
+        "outputPath": "D:\\panel2\\panel1\\panel1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -72,6 +72,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Notepad.Extensions.Logging": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -16,9 +16,11 @@ namespace Panel1.Controllers
     {
         private readonly Connection _connection;
         private readonly InsertMethod _insertMethod;
+        private readonly ILogger<DesignationController> _logger;
 
-        public DesignationController(Connection connection, InsertMethod insertMethod)
+        public DesignationController(ILogger<DesignationController> logger,Connection connection, InsertMethod insertMethod)
         {
+            _logger = logger;
             _connection = connection;
             _insertMethod = insertMethod;
         }
@@ -40,6 +42,7 @@ namespace Panel1.Controllers
 
                 });
             }
+            _logger.LogInformation("Designation List ");
             return Ok(DesignationList);
 
         }

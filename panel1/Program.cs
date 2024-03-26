@@ -47,7 +47,17 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.WebHost.UseUrls("http://192.168.1.50:5116");
+builder.WebHost.UseUrls("http://192.168.1.60:5116");
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddLogging(builder =>
+{
+    builder.ClearProviders();
+     builder.AddProvider(new NotepadLogProvider("log.txt"));
+});
+//builder.Services.AddControllersWithViews();
+
+//builder.Services.AddLogging(lb => lb.AddNotepad());
 builder.Services.AddScoped<InsertMethod>();
 builder.Services.AddScoped<DeleteMethod>();
 

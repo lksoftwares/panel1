@@ -1,0 +1,11 @@
+3/26/2024 1:15:32 PM: [Information] - Now listening on: http://192.168.1.60:5116
+3/26/2024 1:15:32 PM: [Information] - Application started. Press Ctrl+C to shut down.
+3/26/2024 1:15:32 PM: [Information] - Hosting environment: Development
+3/26/2024 1:15:32 PM: [Information] - Content root path: D:\panel2\panel1\panel1\
+3/26/2024 1:15:59 PM: [Information] - 192.168.1.60
+3/26/2024 1:16:44 PM: [Information] - Designation List 
+3/26/2024 1:17:51 PM: [Information] - Now listening on: http://192.168.1.60:5116
+3/26/2024 1:17:51 PM: [Information] - Application started. Press Ctrl+C to shut down.
+3/26/2024 1:17:51 PM: [Information] - Hosting environment: Development
+3/26/2024 1:17:51 PM: [Information] - Content root path: D:\panel2\panel1\panel1\
+3/26/2024 1:18:02 PM: [Information] - Designation List 
