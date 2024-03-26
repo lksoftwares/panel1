@@ -39,7 +39,7 @@ public class NotepadLog : ILogger
 
     public bool IsEnabled(LogLevel logLevel)
     {
-        return true; // Log all levels
+        return true;
     }
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
@@ -56,12 +56,32 @@ public class NotepadLog : ILogger
             }
             catch (Exception ex)
             {
-                // Handle exceptions if any
                 Console.WriteLine($"Error writing to log file: {ex.Message}");
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //using Microsoft.Extensions.Logging;

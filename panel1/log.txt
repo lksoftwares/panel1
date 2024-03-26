@@ -9,3 +9,14 @@
 3/26/2024 1:17:51 PM: [Information] - Hosting environment: Development
 3/26/2024 1:17:51 PM: [Information] - Content root path: D:\panel2\panel1\panel1\
 3/26/2024 1:18:02 PM: [Information] - Designation List 
+3/26/2024 2:07:41 PM: [Information] - Now listening on: http://192.168.1.60:5116
+3/26/2024 2:08:35 PM: [Information] - Application started. Press Ctrl+C to shut down.
+3/26/2024 2:08:49 PM: [Information] - Hosting environment: Development
+3/26/2024 2:08:56 PM: [Information] - Content root path: D:\panel2\panel1\panel1\
+3/26/2024 2:09:01 PM: [Information] - Designation List 
+3/26/2024 2:09:39 PM: [Information] - 192.168.1.60
+3/26/2024 2:11:44 PM: [Information] - Now listening on: http://192.168.1.60:5116
+3/26/2024 2:29:32 PM: [Information] - Now listening on: http://192.168.1.60:5116
+3/26/2024 2:29:33 PM: [Information] - Application started. Press Ctrl+C to shut down.
+3/26/2024 2:29:33 PM: [Information] - Hosting environment: Development
+3/26/2024 2:29:33 PM: [Information] - Content root path: D:\panel2\panel1\panel1\
