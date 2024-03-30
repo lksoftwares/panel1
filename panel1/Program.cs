@@ -60,6 +60,14 @@ builder.Services.AddLogging(builder =>
 //builder.Services.AddLogging(lb => lb.AddNotepad());
 builder.Services.AddScoped<InsertMethod>();
 builder.Services.AddScoped<DeleteMethod>();
+builder.Services.AddControllersWithViews();
+
+
+//builder.Services.AddHttpClient();
+
+//builder.Services.AddScoped<IGpsService, GpsTrackingService>();
+// Add other services
+//builder.Services.AddControllers();
 
 var app = builder.Build();
 app.UseCors("ReactConnection");
@@ -94,6 +102,9 @@ app.UseMiddleware<TestMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=LocationTraking}/{action=Index}/{id?}");
 app.MapControllers();
 
 app.Run();

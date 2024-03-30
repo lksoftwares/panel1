@@ -15,13 +15,21 @@ namespace Panel1.Controllers
     public class RolesController : ControllerBase
     {
         private readonly Connection _connection;
-
+        private LkDataConnection.DataAccess _dc;
+        private LkDataConnection.SqlQueryResult _query;
         public RolesController(Connection connection)
         {
             _connection = connection;
+            DataAccessMethod();
         }
 
-
+        private void DataAccessMethod()
+        {
+            LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+            LkDataConnection.Connection.Connect();
+            _dc = new LkDataConnection.DataAccess();
+            _query = new LkDataConnection.SqlQueryResult();
+        }
         [HttpGet]
         [Route("getallrole")]
         public IActionResult GetAllRole()
@@ -60,14 +68,15 @@ namespace Panel1.Controllers
 
                 //string insertRoleQuery = $"INSERT INTO Roles_R (RoleName) " +
                 //                        $"VALUES ('{role.RoleName}')";
-              //  _connection.ExecuteQueryWithoutResult(insertRoleQuery);
+                //  _connection.ExecuteQueryWithoutResult(insertRoleQuery);
 
-                DataTable dataTable = new DataTable();
-                dataTable.Columns.Add("RoleName");
-                dataTable.Rows.Add(role.RoleName);
+                //DataTable dataTable = new DataTable();
+                //dataTable.Columns.Add("RoleName");
+                //dataTable.Rows.Add(role.RoleName);
 
-                _connection.InsertDataTable("Roles_R", dataTable);
+                // _connection.InsertDataTable("Roles_R", dataTable);
 
+                _query = _dc.InsertOrUpdateEntity(role, "Roles_R", -1);
 
                 return Ok("RoleName Added Successfully");
             }
@@ -81,23 +90,24 @@ namespace Panel1.Controllers
 
         [HttpPut]
         [Route("updateRole/{id}")]
-        public IActionResult UpdateRole(int id, [FromBody] RoleModel role)
+        public IActionResult UpdateRole(int RoleID, [FromBody] RoleModel role)
         {
-            string updateRoleQuery = $"Update Roles_R set RoleName='{role.RoleName}' where RoleID='{id}'";
+            //string updateRoleQuery = $"Update Roles_R set RoleName='{role.RoleName}' where RoleID='{id}'";
             try
             {
-                var duplicacyChecker = new CheckDuplicacy(_connection);
+            //    var duplicacyChecker = new CheckDuplicacy(_connection);
 
-                bool isDuplicate = duplicacyChecker.CheckDuplicate("Designation_mst",
-                 new[] { "RoleName" },
-                 new[] { role.RoleName },
-                 "RoleID");
+            //    bool isDuplicate = duplicacyChecker.CheckDuplicate("Roles_R",
+            //     new[] { "RoleName" },
+            //     new[] { role.RoleName },
+            //     "RoleID");
 
-                if (isDuplicate)
-                {
-                    return BadRequest("Duplicate Rolename exists.");
-                }
-                _connection.ExecuteQueryWithoutResult(updateRoleQuery);
+            //    if (isDuplicate)
+            //    {
+            //        return BadRequest("Duplicate Rolename exists.");
+            //    }
+            //    _connection.ExecuteQueryWithoutResult(updateRoleQuery);
+                 _query = _dc.InsertOrUpdateEntity(role, "Roles_R", RoleID, "RoleID");
                 return Ok("RoleName Updated Successfully");
             }
             catch (Exception ex)
@@ -106,7 +116,7 @@ namespace Panel1.Controllers
             }
         }
         
-        [AllowAnonymous]
+       // [AllowAnonymous]
         [HttpDelete]
         [Route("deleteRole/{id}")]
         public IActionResult DeleteRoleName(int id)

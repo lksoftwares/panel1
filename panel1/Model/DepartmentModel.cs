@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using panel1.Classes;
+using LkDataConnection;
+
 namespace Panel1.Model
 {
     public class DepartmentModel

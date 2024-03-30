@@ -71,6 +71,64 @@ public class NotepadLog : ILogger
 
 
 
+//public class NotepadLogProvider : ILoggerProvider
+//{
+//    private readonly string _filePath;
+
+//    public NotepadLogProvider(string filePath)
+//    {
+//        _filePath = filePath;
+//    }
+
+//    public ILogger CreateLogger(string categoryName)
+//    {
+//        return new NotepadLog(_filePath);
+//    }
+
+//    public void Dispose()
+//    {
+//    }
+//}
+
+//public class NotepadLog : ILogger
+//{
+//    private readonly string _filePath;
+//    private readonly object _lock = new object();
+
+//    public NotepadLog(string filePath)
+//    {
+//        _filePath = filePath;
+//    }
+
+//    public IDisposable BeginScope<TState>(TState state)
+//    {
+//        return null;
+//    }
+
+//    public bool IsEnabled(LogLevel logLevel)
+//    {
+//        return true;
+//    }
+
+//    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+//    {
+//        lock (_lock)
+//        {
+//            try
+//            {
+//                using (var writer = new StreamWriter(_filePath, append: true))
+//                {
+//                    var message = formatter(state, exception);
+//                    writer.WriteLine($"{DateTime.Now}: [{logLevel}] - {message}");
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                Console.WriteLine($"Error writing to log file: {ex.Message}");
+//            }
+//        }
+//    }
+//}
 
 
 

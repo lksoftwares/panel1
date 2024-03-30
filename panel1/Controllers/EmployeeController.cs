@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using LkDataConnection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using panel1.Classes;
 using Panel1.Classes;
@@ -11,20 +12,34 @@ namespace Panel1.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly Connection _connection;
+
+        private readonly Classes.Connection _connection;
 
         public object CryptoJS { get; private set; }
         private readonly InsertMethod _insertMethod;
-        public EmployeeController(Connection connection, InsertMethod insertMethod)
+        private LkDataConnection.DataAccess _dc;
+        private LkDataConnection.SqlQueryResult _query;
+        //  private readonly LkDataConnection.Connection _con;
+        public EmployeeController(Classes.Connection connection, InsertMethod insertMethod)
         {
             _connection = connection;
+
             _insertMethod = insertMethod;
+            DataAccessMethod();
+            // _con =con;
         }
 
+        private void DataAccessMethod()
+        {
+            LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+            LkDataConnection.Connection.Connect();
+            _dc = new LkDataConnection.DataAccess();
+            _query = new LkDataConnection.SqlQueryResult();
+        }
 
         [HttpGet]
         [Route("GetAllEmployee")]
-       public IActionResult GetAllEmployees()
+        public IActionResult GetAllEmployees()
         {
             string getquery = $"select * from Emp_Details";
             try
@@ -38,7 +53,7 @@ namespace Panel1.Controllers
 
                         Emp_id = Convert.ToInt32(row["Emp_id"]),
                         Name = row["Name"].ToString(),
-                       // Emp_Code = row["Emp_Code"].ToString(),
+                        // Emp_Code = row["Emp_Code"].ToString(),
                         // dep_id =Convert.ToInt32(row["dep_id"]),
                         // Designation_id = Convert.ToInt32(row["Designation_id"]),
                         Address1 = row["Address1"].ToString(),
@@ -51,7 +66,7 @@ namespace Panel1.Controllers
                         ImagePath = row["image"].ToString(),
                         Bank_Details = row["Bank_Details"].ToString(),
                         Qualification = row["Qualification"].ToString(),
-                       // password = row["password"].ToString(),
+                        // password = row["password"].ToString(),
                         //RoleID = Convert.ToInt32(row["RoleID"]),
                         Pan = row["Pan"].ToString(),
                         //AdharNo = Convert.ToInt32(row["AdharNo"]),
@@ -69,10 +84,10 @@ namespace Panel1.Controllers
                 }
                 return Ok(EmployeeList);
 
-            
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
             }
@@ -83,24 +98,51 @@ namespace Panel1.Controllers
         [Route("addEmployee")]
         public IActionResult AddEmployeeDetails([FromForm] EmployeeModel employee)
         {
-           // string hashedPassword = HashedPassword.HashPassword(employee.password);
-
-            //string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL)" +
-            //    $"" +
-            //    $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.image}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
             try
             {
-                _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
+                //employee = (EmployeeModel)ColumnMappingTest.ApplyColumnMapping(employee);
 
-                //_connection.ExecuteQueryWithoutResult(insertquery);
+                //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+                //LkDataConnection.Connection.Connect();
+                //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
+                //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
+
+                // Insert or update entity
+                _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", -1);
                 return Ok("Employee Added Successfully");
             }
             catch (Exception ex)
             {
-                
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
             }
         }
+
+
+
+
+
+        //[HttpPost]
+        //[Route("addEmployee")]
+        //public IActionResult AddEmployeeDetails([FromForm] EmployeeModel employee)
+        //{
+        //   // string hashedPassword = HashedPassword.HashPassword(employee.password);
+
+        //    //string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL)" +
+        //    //    $"" +
+        //    //    $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.image}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
+        //    try
+        //    {
+        //        _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
+
+        //        //_connection.ExecuteQueryWithoutResult(insertquery);
+        //        return Ok("Employee Added Successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
+        //    }
+        //}
 
         //[HttpPost]
         //[Route("addEmployee")]
@@ -178,32 +220,69 @@ namespace Panel1.Controllers
         //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
         //    }
         //}
+
+
         [HttpPut]
         [Route("updateEmployee/{Emp_id}")]
         public IActionResult UpdateEmployee(int Emp_id, [FromForm] EmployeeModel employee)
         {
             try
             {
-                string oldImagePath = _connection.GetOldImagePathFromDatabase(Emp_id);
-              //  Console.WriteLine($"here is the connectionstring:{_connection}");
-                if (!string.IsNullOrEmpty(oldImagePath))
+                string oldimagename = _connection.GetOldImagePathFromDatabase(Emp_id);
+                if (!string.IsNullOrEmpty(oldimagename))
                 {
-                    ImagesHandler.DeleteImage(oldImagePath);
+                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "public", "images", oldimagename);
+                    LkDataConnection.DataAccess.DeleteImage("", fullPath);
+
                 }
-              //  Console.WriteLine($"here is the _insertMethod:{_insertMethod}");
-
-                // Update employee details including handling image upload
-                _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details", Emp_id, "Emp_id");
-
+                _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", Emp_id, "Emp_id");
                 return Ok("Employee Updated Successfully");
-            }
+        }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
             }
         }
 
-      
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPut]
+        //[Route("updateEmployee/{Emp_id}")]
+        //public IActionResult UpdateEmployee(int Emp_id, [FromForm] EmployeeModel employee)
+        //{
+        //    try
+        //    {
+        //        string oldImagePath = _connection.GetOldImagePathFromDatabase(Emp_id);
+        //        //  Console.WriteLine($"here is the connectionstring:{_connection}");
+        //        if (!string.IsNullOrEmpty(oldImagePath))
+        //        {
+        //            ImagesHandler.DeleteImage(oldImagePath);
+        //        }
+        //        //  Console.WriteLine($"here is the _insertMethod:{_insertMethod}");
+
+        //        // Update employee details including handling image upload
+        //        _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details", Emp_id, "Emp_id");
+
+        //        return Ok("Employee Updated Successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
+        //    }
+        //}
+
+
 
         [HttpDelete]
         [Route("deleteEmployee/{id}")]
@@ -225,7 +304,5 @@ namespace Panel1.Controllers
     }
 
 
-   
+
 }
-
-

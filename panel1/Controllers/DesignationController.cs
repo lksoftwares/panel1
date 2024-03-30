@@ -5,7 +5,7 @@ using panel1.Classes;
 using Panel1.Classes;
 using Panel1.Model;
 using System.Data;
-
+using LkDataConnection;
 namespace Panel1.Controllers
 {
     //[EnableCors("ReactConnection")]
@@ -14,15 +14,25 @@ namespace Panel1.Controllers
     [ApiController]
     public class DesignationController : ControllerBase
     {
-        private readonly Connection _connection;
+        private readonly Classes.Connection _connection;
         private readonly InsertMethod _insertMethod;
         private readonly ILogger<DesignationController> _logger;
+        private LkDataConnection.DataAccess _dc;
+        private LkDataConnection.SqlQueryResult _query;
 
-        public DesignationController(ILogger<DesignationController> logger,Connection connection, InsertMethod insertMethod)
+        public DesignationController(ILogger<DesignationController> logger,Classes.Connection connection, InsertMethod insertMethod)
         {
             _logger = logger;
             _connection = connection;
             _insertMethod = insertMethod;
+            DataAccessMethod();
+        }
+        private void DataAccessMethod()
+        {
+            LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+            LkDataConnection.Connection.Connect();
+            _dc = new LkDataConnection.DataAccess();
+            _query = new LkDataConnection.SqlQueryResult();
         }
         [HttpGet]
         [Route("getDesignation")]
@@ -36,7 +46,7 @@ namespace Panel1.Controllers
                 DesignationList.Add(new DesignationModel
                 {
                     Designation_id = Convert.ToInt32(row["Designation_id"]),
-                    Designation = row["Designation"].ToString(),
+                //    Designation = row["Designation"].ToString(),
                     status = row["status"].ToString()
 
 
@@ -56,14 +66,22 @@ namespace Panel1.Controllers
 
             try
             {
-                // await _connection.ExecuteQueryWithoutResultAsync(insertquery);
+            //    LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+            //    LkDataConnection.Connection.Connect();
+            //    LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
+            //    LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
 
-                //var insertMethod = new InsertMethod(_connection);
-                //insertMethod.Insert("Designation_mst", new[] { "Designation",  "status" },
-                //                    new[] { designation.Designation,  designation.status });
-             //   _insertMethod.InsertEntityIntoTable(designation, "Designation_mst");
+            //    _query = _dc.InsertOrUpdateEntity(designation, "Designation_mst", -1);
+                        _query = _dc.InsertOrUpdateEntity(designation, "Designation_mst", -1);
 
-                return Ok("Designation Added Successfully");
+            // await _connection.ExecuteQueryWithoutResultAsync(insertquery);
+
+            //var insertMethod = new InsertMethod(_connection);
+            //insertMethod.Insert("Designation_mst", new[] { "Designation",  "status" },
+            //                    new[] { designation.Designation,  designation.status });
+            //   _insertMethod.InsertEntityIntoTable(designation, "Designation_mst");
+
+            return Ok("Designation Added Successfully");
             }
             catch (Exception ex)
             {
@@ -92,22 +110,31 @@ namespace Panel1.Controllers
         {
             try
             {
-                var duplicacyChecker = new CheckDuplicacy(_connection);
+                
 
-                bool isDuplicate = duplicacyChecker.CheckDuplicate("Designation_mst",
-                 new[] { "Designation" },
-                 new[] { designation.Designation },
-                 "Designation_id");
+                _query = _dc.InsertOrUpdateEntity(designation, "Designation_mst", id, "Designation_id");
 
-                if (isDuplicate)
-                {
-                    return BadRequest("Duplicate Designation exists.");
-                }
-                var updateMethod = new UpdateMethod(_connection);
-                updateMethod.Update("Designation_mst",
-                                    new[] { "Designation", "status" },
-                                    new[] { designation.Designation, designation.status },
-                                    "Designation_id", id);
+
+                //_insertMethod.InsertOrUpdateEntity(designation, "Designation_mst", id, "Designation_id");
+
+
+
+                //var duplicacyChecker = new CheckDuplicacy(_connection);
+
+                //bool isDuplicate = duplicacyChecker.CheckDuplicate("Designation_mst",
+                // new[] { "Designation" },
+                // new[] { designation.Designation },
+                // "Designation_id");
+
+                //if (isDuplicate)
+                //{
+                //    return BadRequest("Duplicate Designation exists.");
+                //}
+                //  var updateMethod = new UpdateMethod(_connection);
+                //updateMethod.Update("Designation_mst",
+                //                    new[] { "Designation", "status" },
+                //                    new[] { designation.Designation, designation.status },
+                //                    "Designation_id", id);
                 //string updatequery = $"update Designation_mst set Designation='{designation.Designation}',status='{designation.status}' where Designation_id={id}";
 
                 //_connection.ExecuteQueryWithoutResult(updatequery);

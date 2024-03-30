@@ -1,7 +1,6 @@
-﻿using panel1.Classes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using LkDataConnection;
 namespace Panel1.Model
 {
     public class EmployeeModel
@@ -10,10 +9,12 @@ namespace Panel1.Model
         public int? Emp_id { get; set; }
         public string Name { get; set; }
         //[Column("Emp_Code")]
-        [ColumnMapping("Emp_Code")]
+       [ColumnMapping("Emp_Code")]
+        //[SkipInsert]
         public string empcode { get; set; }
         public int dep_id { get; set; }
         public int Designation_id { get; set; }
+       // [SkipInsert]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public int Contact_No { get; set; }

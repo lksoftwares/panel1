@@ -11,6 +11,7 @@ using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Text;
+using LkDataConnection;
 //using panel1.Middleware;
 
 
@@ -23,12 +24,15 @@ namespace Panel1.Controllers
     {
 
         private readonly TokenValidator _tokenValidator;
-        private readonly Connection _connection;
+        private readonly Classes.Connection _connection;
         private readonly CheckDuplicacy _duplicacyChecker;
         private readonly InsertMethod _insertMethod;
         private readonly DeleteMethod _deletemethod;
-       
-        public DepartmentController(TokenValidator tokenValidator, Connection connection, InsertMethod insertMethod,DeleteMethod deletemethod)
+        private LkDataConnection.DataAccess _dc;
+        private LkDataConnection.SqlQueryResult _query;
+
+
+        public DepartmentController(TokenValidator tokenValidator, Classes.Connection connection, InsertMethod insertMethod,DeleteMethod deletemethod)
             
         {
             _tokenValidator = tokenValidator;
@@ -36,9 +40,16 @@ namespace Panel1.Controllers
             _duplicacyChecker= new CheckDuplicacy(connection);
             _insertMethod = insertMethod;
             _deletemethod = deletemethod;
+            DataAccessMethod();
         }
 
-
+        private void DataAccessMethod()
+        {
+            LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+            LkDataConnection.Connection.Connect();
+            _dc = new LkDataConnection.DataAccess();
+            _query = new LkDataConnection.SqlQueryResult();
+        }
 
         //public DepartmentController(Connection connection)
         //{
@@ -68,7 +79,7 @@ namespace Panel1.Controllers
         //}
 
 
-       //[TokenValidation]
+        //[TokenValidation]
         [HttpGet]
         [Route("GetDepartment")]
          //[MiddlewareFilter(typeof(TestMiddleware))]
@@ -145,8 +156,8 @@ namespace Panel1.Controllers
         //    }
         //}
 
-        [HttpPost]
-        [Route("AddDepartment")]
+        //[HttpPost]
+        //[Route("AddDepartment")]
         //public IActionResult AddDepartment([FromBody] DepartmentModel department)
         //{
         //    try
@@ -194,14 +205,21 @@ namespace Panel1.Controllers
         //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
         //    }
         //}
-
+        [HttpPost]
+        [Route("AddDepartment")]
         [HttpPost]
         public IActionResult AddDepartment([FromBody] DepartmentModel department)
         {
             try
             {
-                _insertMethod.InsertOrUpdateEntity(department, "Department_mst");
-               
+                //_insertMethod.InsertOrUpdateEntity(department, "Department_mst");
+                //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+                //LkDataConnection.Connection.Connect();
+                //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
+                //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
+
+                _query = _dc.InsertOrUpdateEntity(department, "Department_mst", -1);
+
                 return Ok("Department Added Successfully");
             }
             catch (Exception ex)
@@ -237,9 +255,11 @@ namespace Panel1.Controllers
                 //{
                 //    return BadRequest("Department ID mismatch.");
                 //}
-               
+
                 // Call InsertOrUpdateEntity method of InsertMethod to perform the update
-                _insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
+
+                //_insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
+                _query = _dc.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
 
                 return Ok("Department updated successfully.");
             }

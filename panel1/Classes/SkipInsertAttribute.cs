@@ -1,6 +1,6 @@
 ﻿namespace panel1.Classes
 {
-    internal class SkipInsertAttribute:Attribute
+    internal class SkipInsertAttribute : Attribute
     {
     }
 }
