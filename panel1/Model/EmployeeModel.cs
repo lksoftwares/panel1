@@ -9,12 +9,12 @@ namespace Panel1.Model
         public int? Emp_id { get; set; }
         public string Name { get; set; }
         //[Column("Emp_Code")]
-       [ColumnMapping("Emp_Code")]
+       // [ColumnMapping("Emp_Code")]
         //[SkipInsert]
-        public string empcode { get; set; }
+        public string Emp_Code { get; set; }
         public int dep_id { get; set; }
         public int Designation_id { get; set; }
-       // [SkipInsert]
+        // [SkipInsert]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public int Contact_No { get; set; }
@@ -23,7 +23,9 @@ namespace Panel1.Model
         public string Email { get; set; }
         public string Gender { get; set; }
         //[SkipInsert]
-        public IFormFile? image { get; set; }
+        // public IFormFile? image { get; set; }
+        public byte[]? ImageData { get; set; } 
+        public string? ImageFileName { get; set; }
         public string? ImagePath { get; set; }
         public string Bank_Details { get; set; }
         public string Qualification { get; set; }

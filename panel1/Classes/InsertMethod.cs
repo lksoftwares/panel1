@@ -175,8 +175,8 @@ namespace panel1.Classes
                         var fileProperty = (IFormFile)value;
                         if (fileProperty != null && fileProperty.Length > 0)
                         {
-                            string imagePath = ImagesHandler.SaveImage(fileProperty);
-                            parameterDictionary.Add(property.Name, imagePath);
+                           // string imagePath = ImagesHandler.SaveImage(fileProperty);
+                            //parameterDictionary.Add(property.Name, imagePath);
 
                         }
                         continue;

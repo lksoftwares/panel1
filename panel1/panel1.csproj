@@ -64,6 +64,8 @@
     <PackageReference Include="Notepad.Extensions.Logging" Version="1.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
+    <PackageReference Include="Twilio" Version="5.81.2" />
+    <PackageReference Include="WhatsAppNETAPI" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +78,10 @@
     <Reference Include="LkDataConnection">
       <HintPath>..\..\..\Backup\LkDataConnection.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Public\images\" />
   </ItemGroup>
 
 </Project>

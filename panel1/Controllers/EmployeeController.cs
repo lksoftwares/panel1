@@ -94,55 +94,69 @@ namespace Panel1.Controllers
 
         }
 
-        [HttpPost]
-        [Route("addEmployee")]
-        public IActionResult AddEmployeeDetails([FromForm] EmployeeModel employee)
-        {
-            try
-            {
-                //employee = (EmployeeModel)ColumnMappingTest.ApplyColumnMapping(employee);
-
-                //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
-                //LkDataConnection.Connection.Connect();
-                //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
-                //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
-
-                // Insert or update entity
-                _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", -1);
-                return Ok("Employee Added Successfully");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
-            }
-        }
-
-
-
-
-
         //[HttpPost]
         //[Route("addEmployee")]
         //public IActionResult AddEmployeeDetails([FromForm] EmployeeModel employee)
         //{
-        //   // string hashedPassword = HashedPassword.HashPassword(employee.password);
-
-        //    //string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL)" +
-        //    //    $"" +
-        //    //    $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.image}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
         //    try
         //    {
-        //        _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
+        //        //employee = (EmployeeModel)ColumnMappingTest.ApplyColumnMapping(employee);
 
-        //        //_connection.ExecuteQueryWithoutResult(insertquery);
+        //        //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+        //        //LkDataConnection.Connection.Connect();
+        //        //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
+        //        //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
+
+        //        // Insert or update entity
+        //        _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", -1);
         //        return Ok("Employee Added Successfully");
         //    }
         //    catch (Exception ex)
         //    {
-
         //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
         //    }
         //}
+
+
+
+
+
+        [HttpPost]
+        [Route("addEmployee")]
+        public IActionResult AddEmployeeDetails([FromForm] EmployeeModel employee)
+        {
+            if (Request.Form.Files.Count > 0)
+            {
+                var uploadedFile = Request.Form.Files[0];
+                using (var ms = new MemoryStream())
+                {
+                    uploadedFile.CopyTo(ms);
+                    employee.ImageData = ms.ToArray();
+                    employee.ImageFileName = uploadedFile.FileName;
+                    string savedFileName = ImagesHandler.SaveImage(employee.ImageData, employee.ImageFileName);
+                    employee.ImagePath = savedFileName;
+                }
+            }
+            
+
+            string hashedPassword = HashedPassword.HashPassword(employee.password);
+
+            string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL)" +
+                $"" +
+                $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.ImagePath}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
+            try
+            {
+               // _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
+
+                _connection.ExecuteQueryWithoutResult(insertquery);
+                return Ok("Employee Added Successfully");
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error:{ex.Message}");
+            }
+        }
 
         //[HttpPost]
         //[Route("addEmployee")]
@@ -177,23 +191,37 @@ namespace Panel1.Controllers
         //    }
         //}
 
-        //[HttpPut]
-        //[Route("updateEmployee/{id}")]
-        //public IActionResult UpdateDepartment(int id,[FromForm] EmployeeModel employee)
-        //{
-        //    string hashedPassword = HashedPassword.HashPassword(employee.password);
+        [HttpPut]
+        [Route("updateEmployee/{id}")]
+        public IActionResult UpdateDepartment(int id, [FromForm] EmployeeModel employee)
+        {
+            string oldimagename = _connection.GetOldImagePathFromDatabase(id);
+            if (Request.Form.Files.Count > 0)
+            {
+                ImagesHandler.DeleteImage(oldimagename);
+                var uploadedFile = Request.Form.Files[0];
+                using (var ms = new MemoryStream())
+                {
+                    uploadedFile.CopyTo(ms);
+                    byte[] imageData = ms.ToArray();
+                    string newImageFileName = uploadedFile.FileName;
+                    // Save the new image
+                    employee.ImagePath = ImagesHandler.SaveImage(imageData, newImageFileName);
+                }
+            }
+            string hashedPassword = HashedPassword.HashPassword(employee.password);
 
-        //    string updatedepQuery = $"Update Emp_Details set Name='{employee.Name}',Emp_Code='{employee.Emp_Code}',dep_id='{employee.dep_id}',Designation_id='{employee.Designation_id}',Address1='{employee.Address1}',Address2='{employee.Address2}',Contact_No='{employee.Contact_No}',Alternate_No='{employee.Alternate_No}',DOB='{employee.DOB}',Email='{employee.Email}',Gender='{employee.Gender}',image='{employee.image}',Bank_Details='{employee.Bank_Details}',Qualification='{employee.Qualification}',password='{hashedPassword}',RoleID='{employee.RoleID}',JoiningDate='{employee.JoiningDate}',Pan='{employee.Pan}',AdharNo='{employee.AdharNo}',FamilyId='{employee.FamilyId}',SalaryGrade='{employee.SalaryGrade}',status='{employee.status}',PFNo='{employee.PFNo}',ESI_Insurance_No='{employee.ESI_Insurance_No}',DOL='{employee.DOL}' where Emp_id={id}";
-        //    try
-        //    {
-        //        _connection.ExecuteQueryWithoutResult(updatedepQuery);
-        //        return Ok("Employee Updated Successfully");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error{ex.Message}");
-        //    }
-        //}
+            string updatedepQuery = $"Update Emp_Details set Name='{employee.Name}',Emp_Code='{employee.Emp_Code}',dep_id='{employee.dep_id}',Designation_id='{employee.Designation_id}',Address1='{employee.Address1}',Address2='{employee.Address2}',Contact_No='{employee.Contact_No}',Alternate_No='{employee.Alternate_No}',DOB='{employee.DOB}',Email='{employee.Email}',Gender='{employee.Gender}',image='{employee.ImagePath}',Bank_Details='{employee.Bank_Details}',Qualification='{employee.Qualification}',password='{hashedPassword}',RoleID='{employee.RoleID}',JoiningDate='{employee.JoiningDate}',Pan='{employee.Pan}',AdharNo='{employee.AdharNo}',FamilyId='{employee.FamilyId}',SalaryGrade='{employee.SalaryGrade}',status='{employee.status}',PFNo='{employee.PFNo}',ESI_Insurance_No='{employee.ESI_Insurance_No}',DOL='{employee.DOL}' where Emp_id={id}";
+            try
+            {
+                _connection.ExecuteQueryWithoutResult(updatedepQuery);
+                return Ok("Employee Updated Successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error{ex.Message}");
+            }
+        }
 
 
         //[HttpPut]
@@ -222,27 +250,27 @@ namespace Panel1.Controllers
         //}
 
 
-        [HttpPut]
-        [Route("updateEmployee/{Emp_id}")]
-        public IActionResult UpdateEmployee(int Emp_id, [FromForm] EmployeeModel employee)
-        {
-            try
-            {
-                string oldimagename = _connection.GetOldImagePathFromDatabase(Emp_id);
-                if (!string.IsNullOrEmpty(oldimagename))
-                {
-                    string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "public", "images", oldimagename);
-                    LkDataConnection.DataAccess.DeleteImage("", fullPath);
+        //[HttpPut]
+        //[Route("updateEmployee/{Emp_id}")]
+        //public IActionResult UpdateEmployee(int Emp_id, [FromForm] EmployeeModel employee)
+        //{
+        //    try
+        //    {
+        //        string oldimagename = _connection.GetOldImagePathFromDatabase(Emp_id);
+        //        if (!string.IsNullOrEmpty(oldimagename))
+        //        {
+        //            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "public", "images", oldimagename);
+        //            LkDataConnection.DataAccess.DeleteImage("", fullPath);
 
-                }
-                _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", Emp_id, "Emp_id");
-                return Ok("Employee Updated Successfully");
-        }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
-            }
-        }
+        //        }
+        //        _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", Emp_id, "Emp_id");
+        //        return Ok("Employee Updated Successfully");
+        //}
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error {ex.Message}");
+        //    }
+        //}
 
 
 

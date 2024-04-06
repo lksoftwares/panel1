@@ -33,7 +33,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<TokenValidator>(); 
+builder.Services.AddScoped<TokenValidator>();
 
 builder.Services.AddCors(options =>
 {
@@ -47,14 +47,15 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.WebHost.UseUrls("http://192.168.1.60:5116");
-
+builder.WebHost.UseUrls("http://192.168.1.56:5116");
+builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(builder =>
 {
     builder.ClearProviders();
-     builder.AddProvider(new NotepadLogProvider("log.txt"));
+    builder.AddProvider(new NotepadLogProvider("log.txt"));
 });
+    
 //builder.Services.AddControllersWithViews();
 
 //builder.Services.AddLogging(lb => lb.AddNotepad());
@@ -108,3 +109,32 @@ app.MapControllerRoute(
 app.MapControllers();
 
 app.Run();
+
+
+
+
+
+
+
+
+//using WhatsAppNETAPI;
+//using WhatsAppNETAPI.Models;
+//using WhatsAppNETAPI.WhatsApp;
+
+//class Program
+//{
+//    static void Main(string[] args)
+//    {
+//        // Initialize the WhatsApp client
+//        WhatsApp wa = new WhatsApp("pNO.", "your-password", "your-nickname");
+
+//        // Connect to WhatsApp servers
+//        wa.Connect();
+
+//        // Send a message
+//        wa.SendMessage("recipient-phone-number", "Hello, this is a test message from WhatsAppNETAPI!");
+
+//        // Disconnect from WhatsApp servers
+//        wa.Disconnect();
+//    }
+//}

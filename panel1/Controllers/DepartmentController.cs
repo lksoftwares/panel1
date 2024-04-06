@@ -100,8 +100,23 @@ namespace Panel1.Controllers
                     //Description = row["Description"].ToString(),
                     status = row["status"].ToString()
                 });
-            }
+            
 
+            }
+      //      var dataRows = departmentList
+      //.Select(dm =>
+      //{
+      //    var newRow = depTable.NewRow();
+      //    //newRow["dep_id"] = dm.dep_id;
+      //    newRow["Department"] = dm.Department;
+      //    newRow["Short_Name"] = dm.Short_Name;
+      //    //newRow["Description"] = dm.Description;
+      //    newRow["status"] = dm.status;
+      //    return newRow;
+      //});
+
+      //      DataTable newTable = dataRows.CopyToDataTable();
+      //      Console.WriteLine(dataRows);
             return Ok(departmentList);
         }
 

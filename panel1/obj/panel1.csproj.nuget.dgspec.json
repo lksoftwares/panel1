@@ -84,6 +84,14 @@
             "System.Security.Cryptography.Cng": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Twilio": {
+              "target": "Package",
+              "version": "[5.81.2, )"
+            },
+            "WhatsAppNETAPI": {
+              "target": "Package",
+              "version": "[3.0.0, )"
             }
           },
           "imports": [
