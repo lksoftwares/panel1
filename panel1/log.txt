@@ -621,3 +621,72 @@
 4/5/2024 3:31:10 PM: [Information] - Application started. Press Ctrl+C to shut down.
 4/5/2024 3:31:10 PM: [Information] - Hosting environment: Development
 4/5/2024 3:31:10 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/6/2024 11:30:04 AM: [Information] - Now listening on: http://192.168.1.56:5116
+4/6/2024 11:30:04 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/6/2024 11:30:04 AM: [Information] - Hosting environment: Development
+4/6/2024 11:30:04 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/6/2024 12:11:55 PM: [Information] - Now listening on: http://192.168.1.56:5116
+4/6/2024 12:11:56 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/6/2024 12:11:56 PM: [Information] - Hosting environment: Development
+4/6/2024 12:11:56 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 11:26:00 AM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 11:26:00 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 11:26:00 AM: [Information] - Hosting environment: Development
+4/8/2024 11:26:00 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 11:45:55 AM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 11:45:55 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 11:45:55 AM: [Information] - Hosting environment: Development
+4/8/2024 11:45:55 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 11:48:12 AM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 11:48:12 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 11:48:12 AM: [Information] - Hosting environment: Development
+4/8/2024 11:48:12 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 11:54:23 AM: [Error] - An unhandled exception has occurred while executing the request.
+4/8/2024 11:55:43 AM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 11:55:43 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 11:55:43 AM: [Information] - Hosting environment: Development
+4/8/2024 11:55:43 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 11:59:38 AM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 11:59:38 AM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 11:59:38 AM: [Information] - Hosting environment: Development
+4/8/2024 11:59:38 AM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 12:02:58 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 12:02:58 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 12:02:58 PM: [Information] - Hosting environment: Development
+4/8/2024 12:02:58 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 2:57:55 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 2:57:56 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 2:57:56 PM: [Information] - Hosting environment: Development
+4/8/2024 2:57:56 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 3:02:16 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 3:02:17 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 3:02:17 PM: [Information] - Hosting environment: Development
+4/8/2024 3:02:17 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 3:05:28 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 3:05:28 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 3:05:28 PM: [Information] - Hosting environment: Development
+4/8/2024 3:05:28 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 3:06:56 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 3:06:56 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 3:06:56 PM: [Information] - Hosting environment: Development
+4/8/2024 3:06:56 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 3:33:34 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 3:33:34 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 3:33:34 PM: [Information] - Hosting environment: Development
+4/8/2024 3:33:34 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 4:25:55 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 4:25:55 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 4:25:55 PM: [Information] - Hosting environment: Development
+4/8/2024 4:25:55 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 4:29:01 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 4:29:01 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 4:29:01 PM: [Information] - Hosting environment: Development
+4/8/2024 4:29:01 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 4:34:54 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 4:34:54 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 4:34:54 PM: [Information] - Hosting environment: Development
+4/8/2024 4:34:54 PM: [Information] - Content root path: D:\panel2\panel1\panel1
+4/8/2024 4:35:57 PM: [Information] - Now listening on: http://192.168.1.58:5116
+4/8/2024 4:35:58 PM: [Information] - Application started. Press Ctrl+C to shut down.
+4/8/2024 4:35:58 PM: [Information] - Hosting environment: Development
+4/8/2024 4:35:58 PM: [Information] - Content root path: D:\panel2\panel1\panel1

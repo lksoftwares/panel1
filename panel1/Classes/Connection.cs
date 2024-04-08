@@ -165,13 +165,37 @@ namespace Panel1.Classes
 
         public void ExecuteQueryWithoutResult(string query)
         {
+           
             using (SqlCommand com = new SqlCommand(query, _connection))
             {
                 _connection.Open();
                 com.ExecuteNonQuery();
             }
         }
- 
+
+
+
+        public void InsertStoredProcedureQuery(string SpNAme, IDictionary<string, object> parameters)
+        {
+            using (SqlCommand com = new SqlCommand(SpNAme, _connection))
+            {
+                _connection.Open();
+                com.CommandType = CommandType.StoredProcedure;
+                foreach (var parameter in parameters)
+                {
+                    com.Parameters.AddWithValue(parameter.Key, parameter.Value);
+
+                }
+                //com.Parameters.AddWithValue("Department", "jnjk");
+                //com.Parameters.AddWithValue("Short_Name", "jk");
+                //com.Parameters.AddWithValue("Description", "h yuy");
+                //com.Parameters.AddWithValue("status", "1");
+
+
+                com.ExecuteNonQuery();
+
+            }
+        }
         public async Task ExecuteQueryWithoutResultAsync(string query)
         {
             await _connection.OpenAsync();

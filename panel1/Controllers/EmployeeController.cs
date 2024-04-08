@@ -37,6 +37,7 @@ namespace Panel1.Controllers
             _query = new LkDataConnection.SqlQueryResult();
         }
 
+        
         [HttpGet]
         [Route("GetAllEmployee")]
         public IActionResult GetAllEmployees()
@@ -107,7 +108,6 @@ namespace Panel1.Controllers
         //        //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
         //        //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
 
-        //        // Insert or update entity
         //        _query = _dc.InsertOrUpdateEntity(employee, "Emp_Details", -1);
         //        return Ok("Employee Added Successfully");
         //    }
@@ -137,16 +137,16 @@ namespace Panel1.Controllers
                     employee.ImagePath = savedFileName;
                 }
             }
-            
+
 
             string hashedPassword = HashedPassword.HashPassword(employee.password);
 
-            string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL)" +
+            string insertquery = $"insert into Emp_Details(Name,Emp_Code,dep_id,Designation_id,Address1,Address2,Contact_No,Alternate_No,DOB,Email,Gender,image,Bank_Details,Qualification,password,RoleID,JoiningDate,Pan,AdharNo,FamilyId,SalaryGrade,status,PFNo,ESI_Insurance_No,DOL,img)" +
                 $"" +
-                $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.ImagePath}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}')";
+                $"Values('{employee.Name}','{employee.Emp_Code}','{employee.dep_id}','{employee.Designation_id}','{employee.Address1}','{employee.Address2}','{employee.Contact_No}','{employee.Alternate_No}','{employee.DOB}','{employee.Email}','{employee.Gender}','{employee.ImageFileName}','{employee.Bank_Details}','{employee.Qualification}','{hashedPassword}','{employee.RoleID}','{employee.JoiningDate}','{employee.Pan}','{employee.AdharNo}','{employee.FamilyId}','{employee.SalaryGrade}','{employee.status}','{employee.PFNo}','{employee.ESI_Insurance_No}','{employee.DOL}','{employee.ImagePath}')";
             try
             {
-               // _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
+                // _insertMethod.InsertOrUpdateEntity(employee, "Emp_Details");
 
                 _connection.ExecuteQueryWithoutResult(insertquery);
                 return Ok("Employee Added Successfully");

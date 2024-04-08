@@ -47,7 +47,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.WebHost.UseUrls("http://192.168.1.56:5116");
+builder.WebHost.UseUrls("http://192.168.1.58:5116");
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddLogging(builder =>

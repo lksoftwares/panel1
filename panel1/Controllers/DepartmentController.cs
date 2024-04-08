@@ -160,7 +160,6 @@ namespace Panel1.Controllers
         //        string insertDepQuery = $"INSERT INTO Department_mst (Department, Short_Name, Description, status) " +
         //                                $"VALUES ('{department.Department}', '{department.Short_Name}', " +
         //                                $"'{department.Description}', '{department.status}')";
-
         //        _connection.ExecuteQueryWithoutResult(insertDepQuery);
 
         //        return Ok("Department Added Successfully");
@@ -171,6 +170,48 @@ namespace Panel1.Controllers
         //    }
         //}
 
+
+        //-------------------------StoredPRocedure-----------------------
+
+        [HttpPost]
+        [Route("AddDepartment")]
+        public IActionResult AddDepartment([FromBody] DepartmentModel department)
+        {
+            try
+            {
+                var duplicacyChecker = new CheckDuplicacy(_connection);
+
+                bool isDuplicate = duplicacyChecker.CheckDuplicate("Department_mst",
+                    new[] { "Department", "Short_Name" },
+                    new[] { department.Department, department.Short_Name });
+
+                if (isDuplicate)
+                {
+                    return BadRequest("Department already exists.");
+                }
+                var parameters = new Dictionary<string, object>{
+                    { "Department",department.Department},
+                                        { "Short_Name",department.Short_Name},
+                    { "Description",department.Description},
+                    { "status",department.status},
+
+
+                };
+                
+                _connection.InsertStoredProcedureQuery("insertDataProc",parameters);
+
+                return Ok("Department Added Successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+            }
+        }
+
+
+
+
+        
         //[HttpPost]
         //[Route("AddDepartment")]
         //public IActionResult AddDepartment([FromBody] DepartmentModel department)
@@ -220,29 +261,30 @@ namespace Panel1.Controllers
         //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
         //    }
         //}
-        [HttpPost]
-        [Route("AddDepartment")]
-        [HttpPost]
-        public IActionResult AddDepartment([FromBody] DepartmentModel department)
-        {
-            try
-            {
-                //_insertMethod.InsertOrUpdateEntity(department, "Department_mst");
-                //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
-                //LkDataConnection.Connection.Connect();
-                //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
-                //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
+        //--------LKConnectionDLL----------------
+        //[HttpPost]
+        //[Route("AddDepartment")]
+        //[HttpPost]
+        //public IActionResult AddDepartment([FromBody] DepartmentModel department)
+        //{
+        //    try
+        //    {
+        //        //_insertMethod.InsertOrUpdateEntity(department, "Department_mst");
+        //        //LkDataConnection.Connection.ConnectionStr = _connection.GetSqlConnection().ConnectionString;
+        //        //LkDataConnection.Connection.Connect();
+        //        //LkDataConnection.DataAccess _dc = new LkDataConnection.DataAccess();
+        //        //LkDataConnection.SqlQueryResult _query = new LkDataConnection.SqlQueryResult();
 
-                _query = _dc.InsertOrUpdateEntity(department, "Department_mst", -1);
+        //        _query = _dc.InsertOrUpdateEntity(department, "Department_mst", -1);
 
-                return Ok("Department Added Successfully");
-            }
-            catch (Exception ex)
-            {
-                // Return error response
-                return StatusCode((int)HttpStatusCode.InternalServerError, $"Error: {ex.Message}");
-            }
-        }
+        //        return Ok("Department Added Successfully");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Return error response
+        //        return StatusCode((int)HttpStatusCode.InternalServerError, $"Error: {ex.Message}");
+        //    }
+        //}
 
         //[httpput]
         //[route("updatedepartment/{id}")]
@@ -260,21 +302,70 @@ namespace Panel1.Controllers
         //    }
         //}
         [HttpPut]
+        //[Route("updateDepartment/{dep_id}")]
+        //public IActionResult UpdateDepartment(int dep_id, [FromBody] DepartmentModel department)
+        //{
+        //    try
+        //    {
+        //        // Access the dep_id directly from the department object
+        //        //if (dep_id !=department.dep_id)
+        //        //{
+        //        //    return BadRequest("Department ID mismatch.");
+        //        //}
+
+        //        // Call InsertOrUpdateEntity method of InsertMethod to perform the update
+
+        //        //_insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
+        //        _query = _dc.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
+
+        //        return Ok("Department updated successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        //    }
+        //}
+        //[Route("updateDepartment/{dep_id}")]
+        //public IActionResult UpdateDepartment(int dep_id, [FromBody] DepartmentModel department)
+        //{
+        //    try
+        //    {
+        //        // Access the dep_id directly from the department object
+        //        //if (dep_id !=department.dep_id)
+        //        //{
+        //        //    return BadRequest("Department ID mismatch.");
+        //        //}
+
+        //        // Call InsertOrUpdateEntity method of InsertMethod to perform the update
+
+        //        //_insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
+        //        _query = _dc.InsertOrUpdateEntity(department, "Department_mst", dep_id, "dep_id");
+
+        //        return Ok("Department updated successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error: {ex.Message}");
+        //    }
+        //}
+
         [Route("updateDepartment/{dep_id}")]
         public IActionResult UpdateDepartment(int dep_id, [FromBody] DepartmentModel department)
         {
             try
             {
-                // Access the dep_id directly from the department object
-                //if (dep_id !=department.dep_id)
-                //{
-                //    return BadRequest("Department ID mismatch.");
-                //}
+                var parameter = new Dictionary<string, object>
+             {
+                {"dep_id",dep_id },
+                 {"Department",department.Department },
+                 {"Short_Name",department.Short_Name },
+                 {"Description",department.Description },
+                 {"status",department.status }
 
-                // Call InsertOrUpdateEntity method of InsertMethod to perform the update
+                    
+             };
+             _connection.InsertStoredProcedureQuery("updateDataProc",parameter);
 
-                //_insertMethod.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
-                _query = _dc.InsertOrUpdateEntity(department, "Department_mst", dep_id,"dep_id");
 
                 return Ok("Department updated successfully.");
             }
