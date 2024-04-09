@@ -179,26 +179,25 @@ namespace Panel1.Controllers
         {
             try
             {
-                var duplicacyChecker = new CheckDuplicacy(_connection);
+                //var duplicacyChecker = new CheckDuplicacy(_connection);
 
-                bool isDuplicate = duplicacyChecker.CheckDuplicate("Department_mst",
-                    new[] { "Department", "Short_Name" },
-                    new[] { department.Department, department.Short_Name });
+                //bool isDuplicate = duplicacyChecker.CheckDuplicate("Department_mst",
+                //    new[] { "Department", "Short_Name" },
+                //    new[] { department.Department, department.Short_Name });
 
-                if (isDuplicate)
-                {
-                    return BadRequest("Department already exists.");
-                }
+                //if (isDuplicate)
+                //{
+                //    return BadRequest("Department already exists.");
+                //}
                 var parameters = new Dictionary<string, object>{
-                    { "Department",department.Department},
-                                        { "Short_Name",department.Short_Name},
-                    { "Description",department.Description},
-                    { "status",department.status},
+                    { "tabelname","Department_mst"},
+                                        { "Column","Department,Short_Name,Description,status"},
+                    { "values",$"'{department.Department}','{department.Short_Name}','{department.Description}','{department.status}'"},
 
 
                 };
                 
-                _connection.InsertStoredProcedureQuery("insertDataProc",parameters);
+                _connection.InsertStoredProcedureQuery("InsertPro", parameters);
 
                 return Ok("Department Added Successfully");
             }
